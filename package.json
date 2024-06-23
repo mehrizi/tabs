@@ -1,0 +1,91 @@
+{
+  "name": "scrolling-tabs",
+  "homepage": "https://mehrizi.github.io/scrolling-tabs",
+  "private": false,
+  "version": "0.1",
+  "type": "module",
+  "keywords": [
+    "react",
+    "components",
+    "tab",
+    "scroll"
+  ],
+  "author": "Mahdi Mehrizi Sani",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mehrizi/scrolling-tabs"
+  },
+  "bugs": {
+    "url": "https://github.com/mehrizi/scrolling-tabs/issues"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "default": "./dist/scrolling-tabs.es.js",
+        "types": "./dist/Components/index.d.ts"
+      },
+      "require": {
+        "default": "./dist/scrolling-tabs.umd.js",
+        "types": "./dist/Components/index.d.ts"
+      }
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "main": "./dist/scrolling-tabs.umd.js",
+  "module": "./dist/scrolling-tabs.es.js",
+  "types": "./dist/Components/index.d.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:dev": "vitest watch",
+    "coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6006",
+    "storybook:test": "test-storybook",
+    "storybook:build": "storybook build",
+    "storybook:deploy": "echo. > ./storybook-static/.nojekyll && gh-pages -d ./storybook-static -t true"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "7.5.1",
+    "@storybook/addon-interactions": "^7.5.1",
+    "@storybook/addon-links": "7.5.1",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.1",
+    "@storybook/jest": "^0.2.3",
+    "@storybook/react": "7.5.1",
+    "@storybook/react-vite": "7.5.1",
+    "@storybook/test-runner": "^0.15.1",
+    "@storybook/testing-library": "^0.2.2",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^14.1.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react-swc": "^3.3.2",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "eslint-plugin-storybook": "^0.6.15",
+    "gh-pages": "^6.0.0",
+    "jsdom": "^23.0.1",
+    "playwright": "^1.40.0",
+    "sass": "^1.69.3",
+    "storybook": "7.5.1",
+    "typescript": "^5.0.2",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.6.3",
+    "vitest": "^1.0.2",
+    "yarn": "^1.22.19"
+  }
+}
