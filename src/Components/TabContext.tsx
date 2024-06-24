@@ -1,15 +1,17 @@
-import { ReactNode } from "react";
+import { ReactNode, forwardRef } from "react";
 export interface TabContextProps {
   index?: number
-  children: ReactNode
+  children: ReactNode,
+  ref:any
 }
 
 
-export  function TabContext ({index, children}: TabContextProps): JSX.Element {
+export const TabContext =forwardRef ( (props:TabContextProps,ref) => {
   return (
-    <div data-index={index}>
-      {children}
+    <div ref={ref} data-index={props.index}>
+      {props.children}
     </div>
   );
-};
-
+});
+// TabContext.displayName == "TabContext";
+// export {TabContext};
