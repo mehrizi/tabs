@@ -13,9 +13,11 @@ export function Tabs({ children, onChange, style }: TabsProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
   const finalStyle:React.CSSProperties = {
     background: 'white',
+    ...style,
+    padding:10,
+    // important to have following here
     position: "sticky",
      top: 0,
-    ...style
   }
   return (
     <div style={finalStyle}>

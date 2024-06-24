@@ -6,10 +6,6 @@ import { TabContext, TabContextProps } from "./TabContext";
 function countTabContext(children: ReactNode) {
   let count = 0;
   React.Children.map(children, (child) => {
-    if (child && child.props && Array.isArray(child.props.children) && child.props.children.length > 0) {
-      count += countTabContext(child.props.children)
-    }
-
     count = isTabContext(child) ? count + 1 : count
   })
   return count;
@@ -23,15 +19,18 @@ function isTabContext(elm: ReactNode) {
 function isTabs(elm: ReactNode) {
   return React.isValidElement<TabsProps>(elm) && elm.type.name == 'Tabs'
 }
-
+export type TabStyle = 'none'|'underlined'|'contained'
 export interface ScrollingTabsProps {
   children: ReactNode;
+  tabStyle?:TabStyle;
+  tabColor?: string
 }
-export const ScrollingTabsContext = createContext({ activeTab: 0 });
-
+export const ScrollingTabsContext = createContext({ activeTab: 0 ,tabStyle:'none',tabColor:'red'});
 
 export function ScrollingTabs({
   children,
+  tabStyle='underlined',
+  tabColor='red'
 }: ScrollingTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(0);
   const scrollInProgress = useRef(false)
@@ -93,42 +92,15 @@ export function ScrollingTabs({
   var tabContextCount = 0;
   function childrenProping(children: ReactNode) {
     return React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) {
-        console.log(child);
 
-        return child;
+      if (isTabs(child)) {
+        return React.cloneElement<TabsProps>(child, { onChange: setActiveTabByClick });
       }
 
-      let newChildren = child.props.children
-      if (child && child.props && Array.isArray(child.props.children) && child.props.children.length > 0) {
-        // console.log(child.props.children);
-        newChildren = childrenProping(child.props.children)
-        // for (let i = 0; i < child.props.children.length; i++) {
-        //   // if (typeof child.props.children[i] != 'string')
-        //     if (React.isValidElement(child.props.children[i])) 
-        //     {
-
-        //       console.log(child.props.children);
-        //       child.props.children[i] = childrenProping(child.props.children[i])
-        //     }
-
-        // }
-
-
-
-      }
-
-      if (isTabs(child))
-        {
-          console.log(9)
-          return React.cloneElement<TabsProps>(child, { children: newChildren, onChange: setActiveTabByClick });
-        }
-        
 
       if (isTabContext(child)) {
         tabContextCount++;
-
-        return React.cloneElement<TabContextProps>(child, { children: newChildren, ref: refs[tabContextCount - 1], index: tabContextCount - 1 });
+        return React.cloneElement<TabContextProps>(child, { ref: refs[tabContextCount - 1], index: tabContextCount - 1 });
       }
 
       return child;
@@ -136,12 +108,14 @@ export function ScrollingTabs({
     })
   }
 
-  console.log(children)
   const modifiedChildren = childrenProping(children);
 
   return (
-    <ScrollingTabsContext.Provider value={{ activeTab }} >
-      {modifiedChildren}
+    <ScrollingTabsContext.Provider value={{ activeTab,tabColor,tabStyle }} >
+      <div style={{}}>
+        {modifiedChildren}
+      </div>
+
     </ScrollingTabsContext.Provider>
   );
 }
