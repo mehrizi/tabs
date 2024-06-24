@@ -22,12 +22,15 @@ function App() {
       <div style={{ height: 300 }}></div>
 
       <ScrollingTabs>
-          <Tabs>
+        <div>
+        <Tabs>
             {tabs.map((tab, index) => <Tab key={index}>{tab.title}</Tab>)}
           </Tabs>
 
+
         {tabs.map((tab, index) => <TabContext key={index}>{tab.text}</TabContext>)}
-      </ScrollingTabs>
+        </div>
+       </ScrollingTabs>
 
     </>
   );

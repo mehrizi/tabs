@@ -21,11 +21,13 @@ export function Tabs({ children, onChange, style }: TabsProps): JSX.Element {
     <div style={finalStyle}>
       {React.Children.map(children, (child, index) => {
         if (React.isValidElement<TabProps>(child) && child.type === Tab) {
+          
           return React.cloneElement<TabProps>(child, {
             active: index == context.activeTab, 
             onSelect: () => onChange(index)
           });
         }
+        return child;
       })}
     </div>
   );
