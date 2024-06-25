@@ -12,9 +12,8 @@ function countTabContext(children: ReactNode) {
 }
 
 function isTabContext(elm: ReactNode) {
-  // as TabContext is a forwardRef element the following toString() trick is 
-  // so far the only way I can check the component type
-  return React.isValidElement<TabContextProps>(elm) && elm.type.toString() === TabContext.toString()
+
+  return React.isValidElement<TabContextProps>(elm) && elm.type.displayName == "TabContext"
 }
 function isTabs(elm: ReactNode) {
   return React.isValidElement<TabsProps>(elm) && elm.type.name == 'Tabs'

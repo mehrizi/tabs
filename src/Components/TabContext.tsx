@@ -6,12 +6,12 @@ export interface TabContextProps {
 }
 
 
-export const TabContext =forwardRef ( (props:TabContextProps,ref) => {
+const TabContext =forwardRef ( (props:TabContextProps,ref) => {
   return (
     <div ref={ref} data-index={props.index}>
       {props.children}
     </div>
   );
 });
-// TabContext.displayName == "TabContext";
-// export {TabContext};
+TabContext.displayName = "TabContext";
+export {TabContext};
