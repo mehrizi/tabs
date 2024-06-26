@@ -1,17 +1,23 @@
-import { ReactNode, forwardRef } from "react";
+import { LegacyRef, ReactNode, RefObject, forwardRef } from "react";
 export interface TabContextProps {
   index?: number
   children: ReactNode,
-  ref:any
+  ref:any//RefObject<HTMLDivElement>
+}
+
+export interface TabContextRefProps {
+  index?: number
+  children: ReactNode,
 }
 
 
-const TabContext =forwardRef ( (props:TabContextProps,ref) => {
+const TabContext =forwardRef<RefObject<any>,TabContextRefProps> ( (props,ref) => {
   return (
-    <div ref={ref} data-index={props.index}>
+    <div ref={ref as LegacyRef<any>} data-index={props.index}>
       {props.children}
     </div>
   );
 });
 TabContext.displayName = "TabContext";
-export {TabContext};
+export { TabContext };
+

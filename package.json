@@ -8,7 +8,8 @@
     "react",
     "components",
     "tab",
-    "scroll"
+    "scroll",
+    "scrolling"
   ],
   "author": "Mahdi Mehrizi Sani",
   "license": "MIT",
@@ -26,18 +27,22 @@
     ".": {
       "import": {
         "default": "./dist/scrolling-tabs.es.js",
-        "types": "./dist/Components/index.d.ts"
+        "types": [
+          "./dist/index.d.ts"
+        ]
       },
       "require": {
         "default": "./dist/scrolling-tabs.umd.js",
-        "types": "./dist/Components/index.d.ts"
+        "types": [
+          "./dist/index.d.ts"
+        ]
       }
     },
     "./dist/style.css": "./dist/style.css"
   },
   "main": "./dist/scrolling-tabs.umd.js",
   "module": "./dist/scrolling-tabs.es.js",
-  "types": "./dist/Components/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -62,10 +67,10 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-storybook": "^0.6.15",
     "gh-pages": "^6.0.0",
+    "lorem-ipsum": "^2.0.8",
     "typescript": "^5.0.2",
     "vite": "^4.5.0",
     "vite-plugin-dts": "^3.6.3",
-    "yarn": "^1.22.19",
-    "lorem-ipsum": "^2.0.8"
+    "yarn": "^1.22.19"
   }
 }

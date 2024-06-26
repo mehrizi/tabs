@@ -1,7 +1,6 @@
-import { ReactNode, createContext, useEffect, useId, useRef, useState } from "react";
-import { Tabs, TabsProps } from "./Tabs";
-import React from "react";
-import { TabContext, TabContextProps } from "./TabContext";
+import React, { ReactElement, ReactNode, createContext, useEffect, useRef, useState } from "react";
+import { TabContextProps } from "./TabContext";
+import { TabsProps } from "./Tabs";
 
 function countTabContext(children: ReactNode) {
   let count = 0;
@@ -10,13 +9,27 @@ function countTabContext(children: ReactNode) {
   })
   return count;
 }
-
+function getComponentDisplayName(element: React.ReactElement<any>) {
+  const node = element as React.ReactElement<React.ComponentType<any>>;
+  const type = (node as unknown as React.ReactElement<React.FunctionComponent>)
+    .type;
+    
+  const displayName =
+    typeof type === 'function'
+      ? (type as React.FunctionComponent).displayName ||
+        (type as React.FunctionComponent).name ||
+        'Unknown'
+      : (
+        typeof type === 'object'?(type as React.FunctionComponent).displayName:type
+      );
+  return displayName;
+}
 function isTabContext(elm: ReactNode) {
 
-  return React.isValidElement<TabContextProps>(elm) && elm.type.displayName == "TabContext"
+  return React.isValidElement<TabContextProps>(elm) && getComponentDisplayName(elm) == "TabContext"
 }
 function isTabs(elm: ReactNode) {
-  return React.isValidElement<TabsProps>(elm) && elm.type.name == 'Tabs'
+  return React.isValidElement<TabsProps>(elm) && getComponentDisplayName(elm) == 'Tabs'
 }
 export type TabStyle = 'none'|'underlined'|'contained'
 export interface ScrollingTabsProps {
@@ -24,7 +37,12 @@ export interface ScrollingTabsProps {
   tabStyle?:TabStyle;
   tabColor?: string
 }
-export const ScrollingTabsContext = createContext({ activeTab: 0 ,tabStyle:'none',tabColor:'red'});
+export type ScrollingContextType = {
+  activeTab:number
+  tabStyle:TabStyle
+  tabColor:string
+}
+export const ScrollingTabsContext = createContext<ScrollingContextType>({ activeTab: 0 ,tabStyle:'none',tabColor:'red'});
 
 export function ScrollingTabs({
   children,
@@ -42,7 +60,7 @@ export function ScrollingTabs({
 
   useEffect(() => {
 
-    window.addEventListener("scroll", (e) => {
+    window.addEventListener("scroll", () => {
       // check that no scrolling by clicking Tab is in progress
       if (scrollInProgress.current)
         return;
@@ -59,7 +77,7 @@ export function ScrollingTabs({
   }, [])
 
 
-  const setActiveTabByClick = (index) => {
+  const setActiveTabByClick = (index:number) => {
     scrollInProgress.current = true;
     setActiveTab(index);
     refs[index].current.scrollIntoView({
@@ -93,13 +111,13 @@ export function ScrollingTabs({
     return React.Children.map(children, (child) => {
 
       if (isTabs(child)) {
-        return React.cloneElement<TabsProps>(child, { onChange: setActiveTabByClick });
+        return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick });
       }
 
 
       if (isTabContext(child)) {
         tabContextCount++;
-        return React.cloneElement<TabContextProps>(child, { ref: refs[tabContextCount - 1], index: tabContextCount - 1 });
+        return React.cloneElement<TabContextProps>(child as ReactElement, { ref: refs[tabContextCount - 1], index: tabContextCount - 1 });
       }
 
       return child;

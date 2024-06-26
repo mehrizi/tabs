@@ -8,7 +8,10 @@ import dts from "vite-plugin-dts";
 export default defineConfig({
   plugins: [react(),
     dts({
-      include: ['src/Components'],
+      rollupTypes: true ,
+      // root:'./src/Components',
+      // include: ['src/Components'],
+      // exclude: ['src/Components/index.ts']
     })
   ],
   css: {
@@ -24,9 +27,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve('src', 'Components/index.ts'),
-      name: 'MultiEvent',
+      name: 'ScrollingTabs',
       formats: ['es', 'umd'],
-      fileName: (format) => `multi-event.${format}.js`,
+      fileName: (format) => `scrolling-tabs.${format}.js`,
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
