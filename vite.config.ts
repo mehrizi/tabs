@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 import { resolve } from 'node:path'
 import * as packageJson from './package.json'
 import dts from "vite-plugin-dts";
+import terser from '@rollup/plugin-terser';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,7 +13,7 @@ export default defineConfig({
       // root:'./src/Components',
       // include: ['src/Components'],
       // exclude: ['src/Components/index.ts']
-    })
+    }),
   ],
   css: {
     preprocessorOptions: {
@@ -37,7 +38,17 @@ export default defineConfig({
         globals: {
           react: 'React'
         }
-      }
-    }
-  }
+      },
+      
+    },
+  },
+  // rollupOutputOptions:{
+  //   plugins: [
+  //     terser({
+  //       // mangle: false,
+  //       // keep_fnames: true,
+  //     }),
+  //   ],
+  // }
+
 })

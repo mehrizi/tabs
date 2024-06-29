@@ -1,8 +1,5 @@
-import { ScrollingTabs } from "./Components/ScrollingTabs";
-import { Tab } from "./Components/Tab";
-import { TabContext } from "./Components/TabContext";
-import { Tabs } from "./Components/Tabs";
 import { LoremIpsum } from "lorem-ipsum";
+import { ScrollingTabs, Tabs, Tab, TabContext } from"scrolling-tabs";
 
 function generateTabData(index = 1) {
   return {

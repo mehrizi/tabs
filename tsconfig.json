@@ -20,7 +20,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "multi-event-library": [ "./src/Components/index.ts" ]
+      "scrolling-tabs": [ "./src/Components/index.ts" ]
     },
     "typeRoots": [
       "node_modules/@types",

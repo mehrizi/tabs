@@ -110,6 +110,8 @@ export function ScrollingTabs({
   function childrenProping(children: ReactNode) {
     return React.Children.map(children, (child) => {
 
+      // console.log(child);
+      
       if (isTabs(child)) {
         return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick });
       }

@@ -2,7 +2,7 @@
   "name": "scrolling-tabs",
   "homepage": "https://mehrizi.github.io/scrolling-tabs",
   "private": false,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "keywords": [
     "react",
