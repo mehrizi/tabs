@@ -23,9 +23,19 @@ export function Tabs({ children, onChange, style }: TabsProps): JSX.Element {
       {React.Children.map(children, (child, index) => {
         if (React.isValidElement<TabProps>(child) && child.type === Tab) {
 
+          // console.log(typeof onChange);
+          
           return React.cloneElement<TabProps>(child, {
             active: index == context.activeTab,
-            onSelect: () => onChange && onChange(index)
+            onSelect: () => {
+              if (typeof onChange == 'function')
+                {
+                  console.log(888)
+
+                  onChange(index)
+                }
+                
+            }
           });
         }
         return child;
@@ -34,3 +44,4 @@ export function Tabs({ children, onChange, style }: TabsProps): JSX.Element {
   );
 };
 
+Tabs.displayName = "Tabs";

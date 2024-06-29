@@ -2,15 +2,18 @@ import { ReactNode, useContext } from "react";
 import { ScrollingTabsContext } from "./ScrollingTabs";
 
 export interface TabProps {
-  activeStyles?: React.CSSProperties;
+  activeStyle?: React.CSSProperties;
+  style?: React.CSSProperties;
   active?: boolean;
   children: ReactNode;
   onSelect?: () => void;
 }
 
-export function Tab({ activeStyles = {}, active = false, children, onSelect }: TabProps): JSX.Element {
+export function Tab({ style={},activeStyle = {}, active = false, children, onSelect }: TabProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
 
+  // console.log(active);
+  
   const styles = {
     _default: {
       display: 'inline-block',
@@ -55,12 +58,13 @@ export function Tab({ activeStyles = {}, active = false, children, onSelect }: T
 
   const finalStyles = {
     ...styles._default,
-    ...styles[context.tabStyle].default
+    ...styles[context.tabStyle].default,
+    ...style
   }
   const finalActiveStyles = {
     ...finalStyles,
     ...styles[context.tabStyle].active,
-    ...activeStyles
+    ...activeStyle
   }
   return (
     <div style={active ? finalActiveStyles : finalStyles} onClick={onSelect}>
