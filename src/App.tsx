@@ -1,16 +1,6 @@
-import { LoremIpsum } from "lorem-ipsum";
-import { ScrollingTabs, Tabs, Tab, TabContext } from"scrolling-tabs";
+import { ScrollingTabs, Tab, TabContext, Tabs } from "scrolling-tabs";
+import { generateTabData } from "./helpers";
 
-function generateTabData(index = 1) {
-  return {
-    title: `Tab (${index})`,
-    text: <>
-      <h2>This is the ({index}) heading</h2>
-      {(new LoremIpsum()).generateParagraphs(Math.ceil(Math.random() * 15))}
-    </>
-
-  }
-}
 function App() {
   let tabs: any[] = []
   for (let i = 0; i <= 6; i++)
