@@ -16,10 +16,18 @@ export const Primary: Story = {
     tabStyle: 'contained',
     tabColor: '#f00',
   },
+  argTypes: {
+
+    children: {
+      table: {
+        disable: true,
+      },
+    }
+  },
   render: (args) => (
-    <div style={{fontFamily:'"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif'}}>
+    <div style={{ fontFamily: '"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif' }}>
       {(new LoremIpsum()).generateParagraphs(3)}
-      <div style={{ width: 700, margin: '0 auto' }}>
+      <div style={{ width: 700, margin: '0 auto' ,border:'1px solid grey',borderRadius:10,padding:10}}>
         <ScrollingTabs {...args} >
           <Tabs>
             {arr.map(i => <Tab>{generateTabData(i).title}</Tab>)}
