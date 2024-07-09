@@ -9,6 +9,9 @@ const preview: Preview = {
       },
     },
   },
+  decorators:[
+    (Story)=><div style={{fontFamily:'Inter'}}><Story/></div>
+  ]
 };
 
 export default preview;

@@ -58,15 +58,19 @@ export function ScrollingTabs({
   for (let i = 0; i < contextCount; i++)
     refs[i] = useRef<HTMLDivElement>(null);
 
+  const tabsRef = useRef<HTMLDivElement>()
+
   useEffect(() => {
 
     window.addEventListener("scroll", () => {
       // check that no scrolling by clicking Tab is in progress
       if (scrollInProgress.current)
         return;
-      for (let i = contextCount - 1; i >= 0; i--) {
 
-        if (refs[i].current.getBoundingClientRect().top < 0) {
+      const top = tabsRef.current?tabsRef.current.getBoundingClientRect().height:0
+      
+      for (let i = contextCount - 1; i >= 0; i--) {
+        if (refs[i] && refs[i].current&&refs[i].current.getBoundingClientRect().top < top + 100) {
           setActiveTab(i);
           break;
         }
@@ -80,10 +84,11 @@ export function ScrollingTabs({
   const setActiveTabByClick = (index:number) => {
     scrollInProgress.current = true;
     setActiveTab(index);
-    refs[index].current.scrollIntoView({
-      behavior: 'smooth'
-    })
-
+    const top =  window.scrollY + refs[index].current.getBoundingClientRect().top;
+    const topOffset = tabsRef.current?tabsRef.current.getBoundingClientRect().height:70
+    
+     window.scrollTo({top:top - topOffset, behavior: 'smooth'});
+     
     // Below we ensure to set scrollInProgress to true at start
     // When the scroll is finished it is set to false again
     // This way we can prevent conflicting
@@ -113,7 +118,7 @@ export function ScrollingTabs({
       // console.log(child);
       
       if (isTabs(child)) {
-        return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick });
+        return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick , ref:tabsRef});
       }
 
 

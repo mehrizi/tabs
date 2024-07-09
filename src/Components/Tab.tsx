@@ -9,19 +9,21 @@ export interface TabProps {
   onSelect?: () => void;
 }
 
-export function Tab({ style={},activeStyle = {}, active = false, children, onSelect }: TabProps): JSX.Element {
+export function Tab({ style = {}, activeStyle = {}, active = false, children, onSelect }: TabProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
 
   // console.log(active);
-  
+
   const styles = {
     _default: {
       display: 'inline-block',
       paddingRight: 15,
       paddingLeft: 15,
-      transition:'all .5s',
-      cursor:'pointer'
-  
+      marginRight: 5,
+      marginLeft: 5,
+      transition: 'all .5s',
+      cursor: 'pointer'
+
     },
     none: {
       default: {
@@ -32,29 +34,29 @@ export function Tab({ style={},activeStyle = {}, active = false, children, onSel
     },
     underlined: {
       default: {
-        paddingBottom:5,
+        paddingBottom: 5,
         borderBottom: '2px solid rgba(0,0,0,0)'
       },
       active: {
-        borderBottom:`2px solid ${context.tabColor}`
+        borderBottom: `2px solid ${context.tabColor}`
       }
     },
     contained: {
       default: {
-        border:'1px solid #eee',
-        borderRadius:5,
-        padding:'5px 10px',
-        marginLeft:10
+        border: '1px solid #eee',
+        borderRadius: 5,
+        padding: '5px 10px',
+        marginLeft: 10
       },
       active: {
-        border:`1px solid ${context.tabColor}`,
-        backgroundColor:context.tabColor,
-        color:'white'
-      
+        border: `1px solid ${context.tabColor}`,
+        backgroundColor: context.tabColor,
+        color: 'white'
+
       }
     },
   }
-  
+
 
   const finalStyles = {
     ...styles._default,

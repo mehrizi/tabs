@@ -25,15 +25,29 @@ export const Primary: Story = {
     }
   },
   render: (args) => (
-    <div style={{ fontFamily: '"Nunito Sans", -apple-system, ".SFNSText-Regular", "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif' }}>
-      {(new LoremIpsum()).generateParagraphs(3)}
-      <div style={{ width: 700, margin: '0 auto' ,border:'1px solid grey',borderRadius:10,padding:10}}>
+    <div>
+      <div style={{ paddingBottom: 15,textAlign:'center' }}>
+        <b>This area is intentionally put so you can see the sticky behavior of Tabs.<br />
+          At the End we put some space as well to illustrate relative stickyness.<br />
+        </b>
+        {(new LoremIpsum()).generateParagraphs(3)}
+
+      </div>
+
+      <div style={{ width: 700, margin: '0 auto', border: '1px solid grey', borderRadius: 10, padding: 10 }}>
         <ScrollingTabs {...args} >
           <Tabs>
-            {arr.map(i => <Tab>{generateTabData(i).title}</Tab>)}
+            {arr.map(i => <Tab key={i}>{generateTabData(i).title}</Tab>)}
           </Tabs>
-          {arr.map(i => <TabContext>{generateTabData(i).text}</TabContext>)}
+          {arr.map(i => <TabContext key={i}>{generateTabData(i).text}</TabContext>)}
         </ScrollingTabs>
+
+      </div>
+      <div style={{ paddingTop: 15,textAlign:'center' }}>
+        <b>This area is intentionally put so you can see the sticky behavior of Tabs.<br />
+          At the End we put some space as well to illustrate relative stickyness.<br />
+        </b>
+        {(new LoremIpsum()).generateParagraphs(15)}
 
       </div>
 
@@ -41,4 +55,4 @@ export const Primary: Story = {
   )
 
 };
-const arr = [1, 2, 3, 4, 5, 6, 7, 8]
+const arr = [1, 2, 3, 4, 5, 6, 7]
