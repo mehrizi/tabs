@@ -6,6 +6,8 @@ import { LoremIpsum } from 'lorem-ipsum';
 
 const meta: Meta<typeof ScrollingTabs> = {
   component: ScrollingTabs,
+  // tags: ['autodocs'],
+
 };
 
 export default meta;
