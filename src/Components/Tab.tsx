@@ -7,9 +7,10 @@ export interface TabProps {
   active?: boolean;
   children: ReactNode;
   onSelect?: () => void;
+  className?:string
 }
 
-export function Tab({ style = {}, activeStyle = {}, active = false, children, onSelect }: TabProps): JSX.Element {
+export function Tab({ style = {}, activeStyle = {}, active = false, children, onSelect ,className=''}: TabProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
 
   // console.log(active);
@@ -69,7 +70,7 @@ export function Tab({ style = {}, activeStyle = {}, active = false, children, on
     ...activeStyle
   }
   return (
-    <div style={active ? finalActiveStyles : finalStyles} onClick={onSelect}>
+    <div className={className} style={active ? finalActiveStyles : finalStyles} onClick={onSelect}>
       {children}
     </div>
   );

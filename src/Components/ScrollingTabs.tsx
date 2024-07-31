@@ -35,7 +35,8 @@ export type TabStyle = 'none'|'underlined'|'contained'
 export interface ScrollingTabsProps {
   children: ReactNode;
   tabStyle?:TabStyle;
-  tabColor?: string
+  tabColor?: string,
+  className?:string
 }
 export type ScrollingContextType = {
   activeTab:number
@@ -47,7 +48,8 @@ export const ScrollingTabsContext = createContext<ScrollingContextType>({ active
 export function ScrollingTabs({
   children,
   tabStyle='underlined',
-  tabColor='red'
+  tabColor='red',
+  className=''
 }: ScrollingTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(0);
   const scrollInProgress = useRef(false)
@@ -136,7 +138,7 @@ export function ScrollingTabs({
 
   return (
     <ScrollingTabsContext.Provider value={{ activeTab,tabColor,tabStyle }} >
-      <div style={{}}>
+      <div className={className} style={{}}>
         {modifiedChildren}
       </div>
 

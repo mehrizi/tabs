@@ -6,6 +6,7 @@ export interface TabsProps {
   onChange?: (index: number) => void;
   style?: React.CSSProperties
   ref?:any
+  className?:string
 }
 
 
@@ -20,7 +21,7 @@ export const Tabs = forwardRef<RefObject<any>, TabsProps>((props, ref) => {
     top: 0,
   }
   return (
-    <div style={finalStyle} ref={ref as LegacyRef<any>}>
+    <div className={props.className} style={finalStyle} ref={ref as LegacyRef<any>}>
       {React.Children.map(props.children, (child, index) => {
         if (React.isValidElement<TabProps>(child) && child.type === Tab) {
 

@@ -37,7 +37,7 @@ export const Primary: Story = {
       </div>
 
       <div style={{ width: 700, margin: '0 auto', border: '1px solid grey', borderRadius: 10, padding: 10 }}>
-        <ScrollingTabs {...args} >
+        <ScrollingTabs {...args} className=''>
           <Tabs>
             {arr.map(i => <Tab key={i}>{generateTabData(i).title}</Tab>)}
           </Tabs>
