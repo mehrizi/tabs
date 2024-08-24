@@ -13,5 +13,9 @@ const config: StorybookConfig = {
     name: "@storybook/react-vite",
     options: {},
   },
+  managerHead: head => {
+    let cleanedHtml = head? head.replace(/<link\s+rel=["']icon["'][^>]*>/gi, ''):''
+    return `${cleanedHtml}<link rel="icon" type="image/svg+xml" href="/favicon2.svg">‍‍`
+  }
 };
 export default config;
