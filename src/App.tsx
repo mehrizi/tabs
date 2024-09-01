@@ -1,4 +1,5 @@
-import { ScrollingTabs, Tab, TabContext, Tabs } from "scrolling-tabs";
+// import { ScrollingTabs, Tab, TabContext, Tabs } from "scrolling-tabs";
+import { ScrollingTabs, Tab, TabContext, Tabs } from "./Components";
 import { generateTabData } from "./helpers";
 
 function App() {
