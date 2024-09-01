@@ -27,37 +27,34 @@ export const Primary: Story = {
     }
   },
   render: (args) => (
-    <div style={{color:'#444'}}>
-      <div style={{ padding: '100px 0',textAlign:'center' }}>
+    <div style={{ color: '#444' }}>
+      <div style={{ padding: '100px 0', textAlign: 'center' }}>
         This area is intentionally put so you can see the sticky behavior of Tabs.<br />
-          At the End we put some space as well to illustrate relative stickyness.<br />
-        
-        
+        At the End we put some space as well to illustrate relative stickyness.<br />
+
+
       </div>
 
-      <div style={{ width: 700, margin: '0 auto', border: '1px solid #ccc', borderRadius: 10, padding: 10,lineHeight:1.5 }}>
+      <div style={{ width: 700, margin: '0 auto', border: '1px solid #ccc', borderRadius: 10, padding: 10, lineHeight: 1.5 }}>
         <ScrollingTabs {...args} className=''>
-          <Tabs>
-            <Tab>Installation</Tab>
-            {arr.map(i => <Tab key={i}>{generateTabData(i+3).title}</Tab>)}
-          </Tabs>
+            <Tabs>
+              <Tab>Installation</Tab>
+              {arr.map(i => <Tab key={i}>{generateTabData(i + 3).title}</Tab>)}
+            </Tabs>
+
           <TabContext>
             <pre>
-              <ScrollingTabs>
-                <Tabs>
-                  <Tab>Tab 1</Tab>
-                </Tabs>
-              </ScrollingTabs>
+              aaaaa
             </pre>
           </TabContext>
-          {arr.map(i => <TabContext key={i}>{generateTabData(i+3).text}</TabContext>)}
+          {arr.map(i => <TabContext key={i}>{generateTabData(i + 3).text}</TabContext>)}
         </ScrollingTabs>
 
       </div>
-      <div style={{ padding: '200px 0',textAlign:'center' }}>
+      <div style={{ padding: '200px 0', textAlign: 'center' }}>
         This area is intentionally put so you can see the sticky behavior of Tabs.<br />
-          At the End we put some space as well to illustrate relative stickyness.<br />
-        
+        At the End we put some space as well to illustrate relative stickyness.<br />
+
       </div>
 
     </div>

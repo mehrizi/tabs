@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, createContext, useEffect, useRef, useState } from "react";
+import React, { ReactElement, ReactNode, Ref, createContext, useEffect, useRef, useState } from "react";
 import { TabContextProps } from "./TabContext";
 import { TabsProps } from "./Tabs";
 
@@ -42,8 +42,10 @@ export type ScrollingContextType = {
   activeTab:number
   tabStyle:TabStyle
   tabColor:string
+  setTabsRef:(ref:HTMLDivElement)=>void
+  setActiveTabByClick:(tabIndex:number)=>void
 }
-export const ScrollingTabsContext = createContext<ScrollingContextType>({ activeTab: 0 ,tabStyle:'none',tabColor:'red'});
+export const ScrollingTabsContext = createContext<ScrollingContextType>({ setActiveTabByClick:()=>{},setTabsRef:()=>{},activeTab: 0 ,tabStyle:'none',tabColor:'red'});
 
 export function ScrollingTabs({
   children,
@@ -53,6 +55,11 @@ export function ScrollingTabs({
 }: ScrollingTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(0);
   const scrollInProgress = useRef(false)
+
+  const setTabsRef = (ref:HTMLDivElement)=>{
+    tabsRef.current = ref;
+
+  }
 
   // Refs for TabContext component
   const contextCount = countTabContext(children);
@@ -88,6 +95,7 @@ export function ScrollingTabs({
     setActiveTab(index);
     const top =  window.scrollY + refs[index].current.getBoundingClientRect().top;
     const topOffset = tabsRef.current?tabsRef.current.getBoundingClientRect().height:70
+    // console.log(topOffset)
     
      window.scrollTo({top:top - topOffset, behavior: 'smooth'});
      
@@ -119,9 +127,9 @@ export function ScrollingTabs({
 
       // console.log(child);
       
-      if (isTabs(child)) {
-        return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick , ref:tabsRef});
-      }
+      // if (isTabs(child)) {
+      //   return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick , ref:tabsRef});
+      // }
 
 
       if (isTabContext(child)) {
@@ -137,7 +145,7 @@ export function ScrollingTabs({
   const modifiedChildren = childrenProping(children);
 
   return (
-    <ScrollingTabsContext.Provider value={{ activeTab,tabColor,tabStyle }} >
+    <ScrollingTabsContext.Provider value={{setTabsRef, setActiveTabByClick,activeTab,tabColor,tabStyle }} >
       <div className={className} style={{}}>
         {modifiedChildren}
       </div>
