@@ -27,30 +27,37 @@ export const Primary: Story = {
     }
   },
   render: (args) => (
-    <div>
-      <div style={{ paddingBottom: 15,textAlign:'center' }}>
-        <b>This area is intentionally put so you can see the sticky behavior of Tabs.<br />
+    <div style={{color:'#444'}}>
+      <div style={{ padding: '100px 0',textAlign:'center' }}>
+        This area is intentionally put so you can see the sticky behavior of Tabs.<br />
           At the End we put some space as well to illustrate relative stickyness.<br />
-        </b>
-        {(new LoremIpsum()).generateParagraphs(3)}
-
+        
+        
       </div>
 
-      <div style={{ width: 700, margin: '0 auto', border: '1px solid grey', borderRadius: 10, padding: 10 }}>
+      <div style={{ width: 700, margin: '0 auto', border: '1px solid #ccc', borderRadius: 10, padding: 10,lineHeight:1.5 }}>
         <ScrollingTabs {...args} className=''>
           <Tabs>
-            {arr.map(i => <Tab key={i}>{generateTabData(i).title}</Tab>)}
+            <Tab>Installation</Tab>
+            {arr.map(i => <Tab key={i}>{generateTabData(i+3).title}</Tab>)}
           </Tabs>
-          {arr.map(i => <TabContext key={i}>{generateTabData(i).text}</TabContext>)}
+          <TabContext>
+            <pre>
+              <ScrollingTabs>
+                <Tabs>
+                  <Tab>Tab 1</Tab>
+                </Tabs>
+              </ScrollingTabs>
+            </pre>
+          </TabContext>
+          {arr.map(i => <TabContext key={i}>{generateTabData(i+3).text}</TabContext>)}
         </ScrollingTabs>
 
       </div>
-      <div style={{ paddingTop: 15,textAlign:'center' }}>
-        <b>This area is intentionally put so you can see the sticky behavior of Tabs.<br />
+      <div style={{ padding: '200px 0',textAlign:'center' }}>
+        This area is intentionally put so you can see the sticky behavior of Tabs.<br />
           At the End we put some space as well to illustrate relative stickyness.<br />
-        </b>
-        {(new LoremIpsum()).generateParagraphs(15)}
-
+        
       </div>
 
     </div>

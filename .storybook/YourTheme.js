@@ -2,7 +2,7 @@ import { create } from '@storybook/theming/create';
  
 export default create({
   base: 'light',
-  brandTitle: 'My custom Storybook',
-  brandImage: '/favicon2.svg',
+  brandTitle: 'React Scrolling Tabs',
+  brandImage: '/scrolling-tabs.svg',
   brandTarget: '_self',
 });
