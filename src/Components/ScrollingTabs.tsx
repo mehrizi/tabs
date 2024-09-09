@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, Ref, createContext, useEffect, useRef, useState } from "react";
+import React, { ReactElement, ReactNode, Ref, createContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { TabContextProps } from "./TabContext";
 import { TabsProps } from "./Tabs";
 
@@ -13,14 +13,14 @@ function getComponentDisplayName(element: React.ReactElement<any>) {
   const node = element as React.ReactElement<React.ComponentType<any>>;
   const type = (node as unknown as React.ReactElement<React.FunctionComponent>)
     .type;
-    
+
   const displayName =
     typeof type === 'function'
       ? (type as React.FunctionComponent).displayName ||
-        (type as React.FunctionComponent).name ||
-        'Unknown'
+      (type as React.FunctionComponent).name ||
+      'Unknown'
       : (
-        typeof type === 'object'?(type as React.FunctionComponent).displayName:type
+        typeof type === 'object' ? (type as React.FunctionComponent).displayName : type
       );
   return displayName;
 }
@@ -31,32 +31,32 @@ function isTabContext(elm: ReactNode) {
 function isTabs(elm: ReactNode) {
   return React.isValidElement<TabsProps>(elm) && getComponentDisplayName(elm) == 'Tabs'
 }
-export type TabStyle = 'none'|'underlined'|'contained'
+export type TabStyle = 'none' | 'underlined' | 'contained'
 export interface ScrollingTabsProps {
   children: ReactNode;
-  tabStyle?:TabStyle;
+  tabStyle?: TabStyle;
   tabColor?: string,
-  className?:string
+  className?: string
 }
 export type ScrollingContextType = {
-  activeTab:number
-  tabStyle:TabStyle
-  tabColor:string
-  setTabsRef:(ref:HTMLDivElement)=>void
-  setActiveTabByClick:(tabIndex:number)=>void
+  activeTab: number
+  tabStyle: TabStyle
+  tabColor: string
+  setTabsRef: (ref: HTMLDivElement) => void
+  setActiveTabByClick: (tabIndex: number) => void
 }
-export const ScrollingTabsContext = createContext<ScrollingContextType>({ setActiveTabByClick:()=>{},setTabsRef:()=>{},activeTab: 0 ,tabStyle:'none',tabColor:'red'});
+export const ScrollingTabsContext = createContext<ScrollingContextType>({ setActiveTabByClick: () => { }, setTabsRef: () => { }, activeTab: 0, tabStyle: 'none', tabColor: 'red' });
 
 export function ScrollingTabs({
   children,
-  tabStyle='underlined',
-  tabColor='red',
-  className=''
+  tabStyle = 'underlined',
+  tabColor = 'red',
+  className = ''
 }: ScrollingTabsProps): JSX.Element {
   const [activeTab, setActiveTab] = useState(0);
   const scrollInProgress = useRef(false)
 
-  const setTabsRef = (ref:HTMLDivElement)=>{
+  const setTabsRef = (ref: HTMLDivElement) => {
     tabsRef.current = ref;
 
   }
@@ -76,10 +76,10 @@ export function ScrollingTabs({
       if (scrollInProgress.current)
         return;
 
-      const top = tabsRef.current?tabsRef.current.getBoundingClientRect().height:0
-      
+      const top = tabsRef.current ? tabsRef.current.getBoundingClientRect().height : 0
+
       for (let i = contextCount - 1; i >= 0; i--) {
-        if (refs[i] && refs[i].current&&refs[i].current.getBoundingClientRect().top < top + 100) {
+        if (refs[i] && refs[i].current && refs[i].current.getBoundingClientRect().top < top + 100) {
           setActiveTab(i);
           break;
         }
@@ -90,15 +90,15 @@ export function ScrollingTabs({
   }, [])
 
 
-  const setActiveTabByClick = (index:number) => {
+  const setActiveTabByClick = (index: number) => {
     scrollInProgress.current = true;
     setActiveTab(index);
-    const top =  window.scrollY + refs[index].current.getBoundingClientRect().top;
-    const topOffset = tabsRef.current?tabsRef.current.getBoundingClientRect().height:70
+    const top = window.scrollY + refs[index].current.getBoundingClientRect().top;
+    const topOffset = tabsRef.current ? tabsRef.current.getBoundingClientRect().height : 70
     // console.log(topOffset)
-    
-     window.scrollTo({top:top - topOffset, behavior: 'smooth'});
-     
+
+    window.scrollTo({ top: top - topOffset, behavior: 'smooth' });
+
     // Below we ensure to set scrollInProgress to true at start
     // When the scroll is finished it is set to false again
     // This way we can prevent conflicting
@@ -126,7 +126,7 @@ export function ScrollingTabs({
     return React.Children.map(children, (child) => {
 
       // console.log(child);
-      
+
       // if (isTabs(child)) {
       //   return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick , ref:tabsRef});
       // }
@@ -142,10 +142,29 @@ export function ScrollingTabs({
     })
   }
 
+  // Here we make sure that selected tab is visible
+  useEffect(() => {
+    const activeEl = tabsRef.current?.querySelector(".active");
+    // const parentEl = activeEl?.parentElement;//.parentElement;
+    const activeX = activeEl?.getBoundingClientRect().x;
+    const containerWidth = tabsRef.current?.getBoundingClientRect().width;
+    // console.log(parentEl);
+    if (!activeX || !containerWidth)
+      return;
+    
+    if (activeX - containerWidth > -50||activeX<0) {
+
+      activeEl?.scrollIntoView();
+      // parentEl?.scrollTo({ left: -200  });
+
+    }
+
+  })
+
   const modifiedChildren = childrenProping(children);
 
   return (
-    <ScrollingTabsContext.Provider value={{setTabsRef, setActiveTabByClick,activeTab,tabColor,tabStyle }} >
+    <ScrollingTabsContext.Provider value={{ setTabsRef, setActiveTabByClick, activeTab, tabColor, tabStyle }} >
       <div className={className} style={{}}>
         {modifiedChildren}
       </div>

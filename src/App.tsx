@@ -15,6 +15,7 @@ function App() {
       <ScrollingTabs tabStyle="contained">
         <Tabs>
           {tabs.map((tab, index) => <Tab key={index}>{tab.title}</Tab>)}
+          
         </Tabs>
 
 

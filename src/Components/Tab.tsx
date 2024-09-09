@@ -4,13 +4,12 @@ import { ScrollingTabsContext } from "./ScrollingTabs";
 export interface TabProps {
   activeStyle?: React.CSSProperties;
   style?: React.CSSProperties;
-  active?: boolean;
   children: ReactNode;
-  onSelect?: () => void;
   className?:string
 }
 
-export function Tab({ style = {}, activeStyle = {}, active = false, children, onSelect ,className=''}: TabProps): JSX.Element {
+// @ts-ignore
+export function Tab({ style = {},ind, activeStyle = {},  children ,className=''}: TabProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
 
   // console.log(active);
@@ -70,7 +69,7 @@ export function Tab({ style = {}, activeStyle = {}, active = false, children, on
     ...activeStyle
   }
   return (
-    <div className={className} style={active ? finalActiveStyles : finalStyles} onClick={onSelect}>
+    <div className={(context.activeTab==ind?'active ':'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
       {children}
     </div>
   );
