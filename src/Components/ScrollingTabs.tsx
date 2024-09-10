@@ -37,29 +37,28 @@ export interface ScrollingTabsProps {
   tabStyle?: TabStyle;
   tabColor?: string,
   className?: string
+  rtl?: boolean
 }
 export type ScrollingContextType = {
   activeTab: number
   tabStyle: TabStyle
   tabColor: string
+  rtl: boolean
   setTabsRef: (ref: HTMLDivElement) => void
   setActiveTabByClick: (tabIndex: number) => void
 }
-export const ScrollingTabsContext = createContext<ScrollingContextType>({ setActiveTabByClick: () => { }, setTabsRef: () => { }, activeTab: 0, tabStyle: 'none', tabColor: 'red' });
+export const ScrollingTabsContext = createContext<ScrollingContextType>({ rtl: false, setActiveTabByClick: () => { }, setTabsRef: () => { }, activeTab: 0, tabStyle: 'none', tabColor: 'red' });
 
 export function ScrollingTabs({
   children,
   tabStyle = 'underlined',
   tabColor = 'red',
-  className = ''
+  className = '',
 }: ScrollingTabsProps): JSX.Element {
+  const [direction, setDirection] = useState<'rtl' | 'ltr' | null>(null);
   const [activeTab, setActiveTab] = useState(0);
   const scrollInProgress = useRef(false)
-
-  const setTabsRef = (ref: HTMLDivElement) => {
-    tabsRef.current = ref;
-
-  }
+  const container = useRef(null)
 
   // Refs for TabContext component
   const contextCount = countTabContext(children);
@@ -68,6 +67,12 @@ export function ScrollingTabs({
     refs[i] = useRef<HTMLDivElement>(null);
 
   const tabsRef = useRef<HTMLDivElement>()
+
+  const setTabsRef = (ref: HTMLDivElement) => {
+    tabsRef.current = ref;
+
+  }
+
 
   useEffect(() => {
 
@@ -97,15 +102,18 @@ export function ScrollingTabs({
     const topOffset = tabsRef.current ? tabsRef.current.getBoundingClientRect().height : 70
     // console.log(topOffset)
 
-    window.scrollTo({ top: top - topOffset, behavior: 'smooth' });
+    setTimeout(()=>{
+      window.scrollTo({ top: top - topOffset, behavior: 'smooth' });
+      requestAnimationFrame(check);
+
+    },50)
+
 
     // Below we ensure to set scrollInProgress to true at start
     // When the scroll is finished it is set to false again
     // This way we can prevent conflicting
     var lastPos: number = 0;
     var same = 0;
-
-    requestAnimationFrame(check);
 
     function check() {
       if (window.scrollY === lastPos) { // same as previous
@@ -124,13 +132,6 @@ export function ScrollingTabs({
   var tabContextCount = 0;
   function childrenProping(children: ReactNode) {
     return React.Children.map(children, (child) => {
-
-      // console.log(child);
-
-      // if (isTabs(child)) {
-      //   return React.cloneElement<TabsProps>(child as ReactElement, { onChange: setActiveTabByClick , ref:tabsRef});
-      // }
-
 
       if (isTabContext(child)) {
         tabContextCount++;
@@ -151,22 +152,38 @@ export function ScrollingTabs({
     // console.log(parentEl);
     if (!activeX || !containerWidth)
       return;
-    
-    if (activeX - containerWidth > -50||activeX<0) {
 
-      activeEl?.scrollIntoView();
+    if (activeX - containerWidth > -50 || activeX < 0) {
+
+      setTimeout(() => {activeEl?.scrollIntoView(); }, 1);
+      // activeEl?.scrollIntoView();
       // parentEl?.scrollTo({ left: -200  });
 
     }
 
   })
 
+  // Detecting the direction
+  useEffect(() => {
+    if (direction === null && container.current) {
+      // @ts-ignore
+      const dir = getComputedStyle(container.current.parentElement)?.direction
+      if (!dir) {
+        console.log("ScrollingTab: Could not determine direction! setting to LTR")
+        setDirection('ltr')
+      }
+
+      setDirection(dir as 'rtl' | 'ltr')
+
+    }
+
+  }, [])
   const modifiedChildren = childrenProping(children);
 
   return (
-    <ScrollingTabsContext.Provider value={{ setTabsRef, setActiveTabByClick, activeTab, tabColor, tabStyle }} >
-      <div className={className} style={{}}>
-        {modifiedChildren}
+    <ScrollingTabsContext.Provider value={{ rtl: direction === 'rtl', setTabsRef, setActiveTabByClick, activeTab, tabColor, tabStyle }} >
+      <div className={className} style={{}} ref={container}>
+        {direction && modifiedChildren}
       </div>
 
     </ScrollingTabsContext.Provider>

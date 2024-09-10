@@ -2,18 +2,16 @@ import React, { ReactNode, RefObject, forwardRef, useContext, useEffect, useLayo
 import { ScrollingTabsContext } from "./ScrollingTabs";
 import { Tab, TabProps } from "./Tab";
 import XSlider from "./XSlider";
+import XSliderRTL from "./XSliderRTL";
 export interface TabsProps {
   children: ReactNode;
   style?: React.CSSProperties
-  ref?: any
   className?: string
 }
 
 
-export const Tabs = forwardRef<RefObject<any>, TabsProps>((props) => {
+export const Tabs = (props: TabsProps) => {
   const context = useContext(ScrollingTabsContext);
-  const [overFlowEnd, setOverFlowEnd] = useState(false)
-  const [overFlowStart, setOverFlowStart] = useState(false)
   const finalStyle: React.CSSProperties = {
     background: 'white',
     padding: 10,
@@ -53,46 +51,15 @@ export const Tabs = forwardRef<RefObject<any>, TabsProps>((props) => {
 
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      const lastEl = ref.current?.querySelector('.a-last-element')
-      const firstEl = ref.current?.querySelector('.react-draggable:first-child')
-      if (!firstEl || !lastEl || !ref.current)
-        return;
-      if (firstEl.getBoundingClientRect().x < -10)
-        setOverFlowStart(true)
-      else
-        setOverFlowStart(false)
-      if (lastEl.getBoundingClientRect().x - (ref.current?.getBoundingClientRect().x + ref.current?.getBoundingClientRect().width) > 10)
-        setOverFlowEnd(true)
-      else
-        setOverFlowEnd(false)
-
-    }, 100)
-
-  })
-  const arrowsStyles: React.CSSProperties = {
-    height: '100%', verticalAlign: 'middle', position: "absolute",
-    left: 0,
-    top: 10,
-    zIndex: 1000,
-    padding: 5,
-    // paddingLeft:5,
-    background: 'linear-gradient(to right, white, rgba(255, 255, 255, 0))',
-    color: '#555',
-    fontSize: 20
-  }
+ 
   const finalChildren = recursiveMap(props.children)
   return (
     <div className={props.className} style={finalStyle} ref={ref}>
-      {overFlowStart && <div style={arrowsStyles} className="overflow-left">&laquo;</div>}
-      <XSlider>
+      <XSlider isRTL={context.rtl}>
         {finalChildren}
       </XSlider>
-      {overFlowEnd && <div style={{ ...arrowsStyles, left: 'auto', right: 0, background: 'linear-gradient(to right, rgba(255, 255, 255, 0),white)' }}
-        className="overflow-right">&raquo;</div>}
     </div>
   );
-});
+};
 
 Tabs.displayName = "Tabs";
