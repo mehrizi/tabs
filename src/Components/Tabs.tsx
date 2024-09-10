@@ -1,8 +1,7 @@
-import React, { ReactNode, RefObject, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { ReactNode, useContext, useEffect, useRef } from "react";
 import { ScrollingTabsContext } from "./ScrollingTabs";
 import { Tab, TabProps } from "./Tab";
 import XSlider from "./XSlider";
-import XSliderRTL from "./XSliderRTL";
 export interface TabsProps {
   children: ReactNode;
   style?: React.CSSProperties

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { ScrollingTabs, Tab, TabContext, Tabs } from '../Components';
 import { generateTabData } from '../helpers';
-import { LoremIpsum } from 'lorem-ipsum';
 
 const meta: Meta<typeof ScrollingTabs> = {
   component: ScrollingTabs,

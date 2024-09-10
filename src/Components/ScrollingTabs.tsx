@@ -1,6 +1,5 @@
-import React, { ReactElement, ReactNode, Ref, createContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { ReactElement, ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { TabContextProps } from "./TabContext";
-import { TabsProps } from "./Tabs";
 
 function countTabContext(children: ReactNode) {
   let count = 0;
@@ -27,9 +26,6 @@ function getComponentDisplayName(element: React.ReactElement<any>) {
 function isTabContext(elm: ReactNode) {
 
   return React.isValidElement<TabContextProps>(elm) && getComponentDisplayName(elm) == "TabContext"
-}
-function isTabs(elm: ReactNode) {
-  return React.isValidElement<TabsProps>(elm) && getComponentDisplayName(elm) == 'Tabs'
 }
 export type TabStyle = 'none' | 'underlined' | 'contained'
 export interface ScrollingTabsProps {
