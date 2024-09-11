@@ -6,10 +6,11 @@ export interface TabProps {
   style?: React.CSSProperties;
   children: ReactNode;
   className?:string
+  activeClassName?:string
 }
 
 // @ts-ignore
-export function Tab({ style = {},ind, activeStyle = {},  children ,className=''}: TabProps): JSX.Element {
+export function Tab({ style = {},ind, activeStyle = {},  children ,className='',activeClassName=''}: TabProps): JSX.Element {
   const context = useContext(ScrollingTabsContext);
 
   // console.log(active);
@@ -69,7 +70,7 @@ export function Tab({ style = {},ind, activeStyle = {},  children ,className=''}
     ...activeStyle
   }
   return (
-    <div className={(context.activeTab==ind?'active ':'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
+    <div className={(context.activeTab==ind?`active ${activeClassName}`:'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
       {children}
     </div>
   );

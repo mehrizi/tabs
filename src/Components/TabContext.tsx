@@ -10,12 +10,13 @@ export interface TabContextRefProps {
   index?: number
   children: ReactNode
   className?:string
+  style?:React.CSSProperties
 }
 
 
 const TabContext =forwardRef<RefObject<any>,TabContextRefProps> ( (props,ref) => {
   return (
-    <div className={props.className} ref={ref as LegacyRef<any>} data-index={props.index}>
+    <div style={props.style} className={props.className} ref={ref as LegacyRef<any>} data-index={props.index}>
       {props.children}
     </div>
   );

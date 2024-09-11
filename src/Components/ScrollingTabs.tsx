@@ -33,7 +33,6 @@ export interface ScrollingTabsProps {
   tabStyle?: TabStyle;
   tabColor?: string,
   className?: string
-  rtl?: boolean
 }
 export type ScrollingContextType = {
   activeTab: number
