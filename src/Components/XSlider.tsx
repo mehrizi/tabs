@@ -2,7 +2,7 @@ import { MouseEvent, ReactNode, useContext, useEffect, useRef, useState } from "
 import Draggable from "react-draggable"
 import { ScrollingTabsContext } from "./ScrollingTabs";
 
-export default function XSlider({ children }: { children: ReactNode, isRTL?: boolean }) {
+export default function XSlider({ children, noArrow = false }: { children: ReactNode, noArrow?: boolean }) {
     const context = useContext(ScrollingTabsContext);
     const dragRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -16,8 +16,8 @@ export default function XSlider({ children }: { children: ReactNode, isRTL?: boo
         if (!firstEl || !lastEl || !containerRef.current)
             return;
 
-        console.log(lastEl.getBoundingClientRect().x ,containerRef.current.getBoundingClientRect().x + containerRef.current.getBoundingClientRect().width)
-        if (lastEl.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().width >10)
+        console.log(lastEl.getBoundingClientRect().x, containerRef.current.getBoundingClientRect().x + containerRef.current.getBoundingClientRect().width)
+        if (lastEl.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().width > 10)
             setOverFlowRight(true)
         else
             setOverFlowRight(false)
@@ -53,12 +53,13 @@ export default function XSlider({ children }: { children: ReactNode, isRTL?: boo
 
     }
     useEffect(() => {
-        setTimeout(() => {
-            if (context.rtl)
-                rtlArrowCheck()
-            else
-                ltrArrowCheck()
-        }, 100)
+        if (!noArrow)
+            setTimeout(() => {
+                if (context.rtl)
+                    rtlArrowCheck()
+                else
+                    ltrArrowCheck()
+            }, 100)
 
     })
     const leftArrowStyles: React.CSSProperties = {
@@ -135,9 +136,9 @@ export default function XSlider({ children }: { children: ReactNode, isRTL?: boo
 
             </div>
         </Draggable>
-        {overFlowRight && <div style={rightArrowStyle}
+        {(!noArrow && overFlowRight) && <div style={rightArrowStyle}
             className="overflow-right">&raquo;</div>}
-        {overFlowLeft && <div style={leftArrowStyles} className="overflow-left">&laquo;</div>}
+        {(!noArrow && overFlowLeft) && <div style={leftArrowStyles} className="overflow-left">&laquo;</div>}
 
 
     </div>

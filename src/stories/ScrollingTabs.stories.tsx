@@ -1,10 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { cb } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-import { ReactNode, useState } from 'react';
 import { ScrollingTabs, Tab, TabContext, Tabs } from '../Components';
 import { generateTabData } from '../helpers';
 import { InlineCode } from './helpers';
@@ -49,7 +47,8 @@ export const Primary: Story = {
               <Tab>RTL</Tab>
               <Tab>Customization</Tab>
               <Tab>Responsivity</Tab>
-              {arr.map(i => <Tab key={i}>{generateTabData(i + 6).title}</Tab>)}
+              <Tab>TroubleShoot</Tab>
+              {arr.map(i => <Tab key={i}>{generateTabData(i).title}</Tab>)}
             </Tabs>
 
             <TabContext>
@@ -167,7 +166,15 @@ export const Primary: Story = {
               Two arrows are displayed in rightmost or leftmost space of horizonal Tabs bar which you can remove totally by boolean
               <InlineCode>hideArrows</InlineCode> prop.
             </TabContext>
-            {arr.map(i => <TabContext key={i}>{generateTabData(i + 3).text}</TabContext>)}
+            <TabContext>
+              <h2>Troubleshoot</h2>
+              <ul>
+                <li>
+                  If any decendent parent has <code>hidden</code> overflow, the CSS sticky position would not work. Instead use overflow:clip
+                </li>
+              </ul>
+            </TabContext>
+            {arr.map(i => <TabContext key={i}>{generateTabData(i).text}</TabContext>)}
           </ScrollingTabs>
 
         </div>
@@ -193,4 +200,4 @@ export const RTL: Story = {
   ],
 };
 
-const arr = [1, 2, 3, 4, 5, 6, 7]
+const arr = [8,9,10,11]

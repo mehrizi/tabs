@@ -2,7 +2,7 @@
   "name": "scrolling-tabs",
   "homepage": "https://mehrizi.github.io/scrolling-tabs",
   "private": false,
-  "version": "0.4.5",
+  "version": "0.7.1",
   "type": "module",
   "keywords": [
     "react",
@@ -48,7 +48,8 @@
     "test:dev": "vitest watch",
     "coverage": "vitest run --coverage",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "storybook:build": "storybook build",
+    "storybook:deploy": "echo > ./storybook-static/.nojekyll && gh-pages -d ./storybook-static -t true"
   },
   "peerDependencies": {
     "react": ">=16.3.0",
@@ -76,14 +77,13 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "eslint-plugin-storybook": "^0.6.15",
-    "gh-pages": "^6.0.0",
+    "gh-pages": "^6.1.1",
     "lorem-ipsum": "^2.0.8",
+    "react-syntax-highlighter": "^15.5.0",
     "storybook": "^8.1.11",
     "typescript": "^5.0.2",
     "vite": "^4.5.0",
     "vite-plugin-dts": "^3.6.3",
-    "yarn": "^1.22.19",
-    "react-syntax-highlighter": "^15.5.0"
-
+    "yarn": "^1.22.19"
   }
 }

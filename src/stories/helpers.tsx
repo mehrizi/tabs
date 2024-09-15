@@ -1,8 +1,7 @@
-import { ReactNode } from "react"
-import style from "react-syntax-highlighter/dist/esm/styles/hljs/a11y-dark";
+import { ReactNode } from "react";
 
 export const InlineCode = ({children,cmd=false}:{children:ReactNode,cmd?:boolean})=>{
-    let styles = {
+    let styles:React.CSSProperties = {
         backgroundColor:'#fff8e8',
         color:'#333',
         padding:'2px 4px',

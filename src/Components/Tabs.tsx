@@ -4,6 +4,7 @@ import { Tab, TabProps } from "./Tab";
 import XSlider from "./XSlider";
 export interface TabsProps {
   children: ReactNode;
+  noArrow?: boolean;
   style?: React.CSSProperties
   className?: string
 }
@@ -54,7 +55,7 @@ export const Tabs = (props: TabsProps) => {
   const finalChildren = recursiveMap(props.children)
   return (
     <div className={props.className} style={finalStyle} ref={ref}>
-      <XSlider isRTL={context.rtl}>
+      <XSlider noArrow={props.noArrow}>
         {finalChildren}
       </XSlider>
     </div>
