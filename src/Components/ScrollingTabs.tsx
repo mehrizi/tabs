@@ -1,13 +1,6 @@
 import React, { ReactElement, ReactNode, createContext, useEffect, useRef, useState } from "react";
 import { TabContextProps } from "./TabContext";
 
-function countTabContext(children: ReactNode) {
-  let count = 0;
-  React.Children.map(children, (child) => {
-    count = isTabContext(child) ? count + 1 : count
-  })
-  return count;
-}
 function getComponentDisplayName(element: React.ReactElement<any>) {
   const node = element as React.ReactElement<React.ComponentType<any>>;
   const type = (node as unknown as React.ReactElement<React.FunctionComponent>)
@@ -34,14 +27,16 @@ export interface ScrollingTabsProps {
   tabColor?: string,
   className?: string
 }
-export type ScrollingContextType = {
-  activeTab: number
-  tabStyle: TabStyle
-  tabColor: string
-  rtl: boolean
-  setTabsRef: (ref: HTMLDivElement) => void
-  setActiveTabByClick: (tabIndex: number) => void
-}
+export type ScrollingContextType
+
+  = {
+    activeTab: number
+    tabStyle: TabStyle
+    tabColor: string
+    rtl: boolean
+    setTabsRef: (ref: HTMLDivElement) => void
+    setActiveTabByClick: (tabIndex: number) => void
+  }
 export const ScrollingTabsContext = createContext<ScrollingContextType>({ rtl: false, setActiveTabByClick: () => { }, setTabsRef: () => { }, activeTab: 0, tabStyle: 'none', tabColor: 'red' });
 
 export function ScrollingTabs({
@@ -56,9 +51,8 @@ export function ScrollingTabs({
   const container = useRef(null)
 
   // Refs for TabContext component
-  const contextCount = countTabContext(children);
   var refs: any = [];
-  for (let i = 0; i < contextCount; i++)
+  for (let i = 0; i < 50; i++) // important to have constant number of hooks!
     refs[i] = useRef<HTMLDivElement>(null);
 
   const tabsRef = useRef<HTMLDivElement>()
@@ -78,7 +72,8 @@ export function ScrollingTabs({
 
       const top = tabsRef.current ? tabsRef.current.getBoundingClientRect().height : 0
 
-      for (let i = contextCount - 1; i >= 0; i--) {
+      for (let i = 49; i >= 0; i--) {
+
         if (refs[i] && refs[i].current && refs[i].current.getBoundingClientRect().top < top + 100) {
           setActiveTab(i);
           break;
@@ -92,16 +87,16 @@ export function ScrollingTabs({
 
   const setActiveTabByClick = (index: number) => {
     scrollInProgress.current = true;
-    setActiveTab(index);
     const top = window.scrollY + refs[index].current.getBoundingClientRect().top;
     const topOffset = tabsRef.current ? tabsRef.current.getBoundingClientRect().height : 70
-    // console.log(topOffset)
+    console.log(top - topOffset)
+    setActiveTab(index);
 
-    setTimeout(()=>{
+    setTimeout(() => {
       window.scrollTo({ top: top - topOffset, behavior: 'smooth' });
       requestAnimationFrame(check);
 
-    },50)
+    }, 1)
 
 
     // Below we ensure to set scrollInProgress to true at start
@@ -112,7 +107,7 @@ export function ScrollingTabs({
 
     function check() {
       if (window.scrollY === lastPos) { // same as previous
-        if (same++ > 2) {
+        if (same++ > 3) {
           scrollInProgress.current = false;
           return;
         }
@@ -138,25 +133,6 @@ export function ScrollingTabs({
     })
   }
 
-  // Here we make sure that selected tab is visible
-  useEffect(() => {
-    const activeEl = tabsRef.current?.querySelector(".active");
-    // const parentEl = activeEl?.parentElement;//.parentElement;
-    const activeX = activeEl?.getBoundingClientRect().x;
-    const containerWidth = tabsRef.current?.getBoundingClientRect().width;
-    // console.log(parentEl);
-    if (!activeX || !containerWidth)
-      return;
-
-    if (activeX - containerWidth > -50 || activeX < 0) {
-
-      setTimeout(() => {activeEl?.scrollIntoView(); }, 1);
-      // activeEl?.scrollIntoView();
-      // parentEl?.scrollTo({ left: -200  });
-
-    }
-
-  })
 
   // Detecting the direction
   useEffect(() => {
@@ -165,7 +141,7 @@ export function ScrollingTabs({
       const dir = getComputedStyle(container.current.parentElement)?.direction
       if (!dir) {
         console.log("ScrollingTab: Could not determine direction! setting to LTR")
-        setDirection('ltr')
+        return setDirection('ltr')
       }
 
       setDirection(dir as 'rtl' | 'ltr')

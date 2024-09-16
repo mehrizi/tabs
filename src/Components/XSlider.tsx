@@ -6,9 +6,19 @@ export default function XSlider({ children, noArrow = false }: { children: React
     const context = useContext(ScrollingTabsContext);
     const dragRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const [dragX, setDragX] = useState(0)
     const [overFlowLeft, setOverFlowLeft] = useState(false)
     const [overFlowRight, setOverFlowRight] = useState(false)
 
+    const arrowCheck = () => {
+        if (noArrow)
+            return;
+
+        if (context.rtl)
+            rtlArrowCheck()
+        else
+            ltrArrowCheck()
+    }
     const ltrArrowCheck = () => {
         const lastEl = containerRef.current?.querySelector('.react-draggable>:last-child')
         const firstEl = containerRef.current?.querySelector('.react-draggable>:first-child')
@@ -52,22 +62,56 @@ export default function XSlider({ children, noArrow = false }: { children: React
             setOverFlowLeft(true)
 
     }
-    useEffect(() => {
-        if (!noArrow)
-            setTimeout(() => {
-                if (context.rtl)
-                    rtlArrowCheck()
-                else
-                    ltrArrowCheck()
-            }, 100)
 
-    })
+    // Here we make sure that selected tab is visible
+    useEffect(() => {
+        const activeEl = containerRef?.current?.querySelector(".active");
+        const parentEl = containerRef?.current;
+        if (!parentEl || !activeEl)
+            return;
+
+        const activeX = activeEl?.getBoundingClientRect().x;
+        const containerWidth = parentEl?.getBoundingClientRect().width;
+        const containerX = parentEl?.getBoundingClientRect().x
+
+        const containerRight = containerX + containerWidth
+        const activeRight = activeX + activeEl?.getBoundingClientRect().width;
+
+        // console.log(containerRight, activeRight);
+
+        if (activeRight > containerRight) {
+            setDragX(dragX - (activeRight - containerRight) - 20);
+            setTimeout(() => {
+                arrowCheck()
+            }, 2)
+    
+            return;
+        }
+        if (activeX < containerX) {
+            setDragX(dragX + (containerX - activeX) + 20);
+            setTimeout(() => {
+                arrowCheck()
+            }, 2)
+    
+            return;
+        }
+
+    }, [context.activeTab])
+
+
+    useEffect(() => {
+        setTimeout(() => {
+            arrowCheck()
+        }, 100)
+
+    }, [])
     const leftArrowStyles: React.CSSProperties = {
         direction: 'ltr',
-        height: '100%', verticalAlign: 'middle', position: "absolute",
+        verticalAlign: 'middle', position: "absolute",
         maxHeight: '100%',
         left: 0,
         top: 0,
+        bottom: 0,
         zIndex: 1000,
         padding: 5,
         paddingTop: 10,
@@ -84,18 +128,24 @@ export default function XSlider({ children, noArrow = false }: { children: React
     }
 
     return <div style={{
-        overflowX: 'hidden',
+        overflow: 'hidden',
         whiteSpace: "nowrap"
     }} ref={containerRef}>
         <Draggable
             axis='x'
-            onDrag={(e) => {
-                // setTimeout(() => {
-                if (context.rtl)
-                    rtlArrowCheck()
-                else
-                    ltrArrowCheck()
-                //   }, 100)
+            position={{ y: 0, x: dragX }}
+            onDrag={(e, a) => {
+
+                setTimeout(() => {
+                    if (!noArrow) {
+                        if (context.rtl)
+                            rtlArrowCheck()
+                        else
+                            ltrArrowCheck()
+
+                    }
+
+                }, 100)
 
                 const bounding = dragRef.current?.getBoundingClientRect()
                 const boundingContainer = containerRef.current?.getBoundingClientRect()
@@ -103,7 +153,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
                 const boundingLast = lastEl?.getBoundingClientRect();
 
                 if (!bounding || !boundingContainer || !boundingLast)
-                    return;
+                    return false;
 
 
                 const me = e as MouseEvent;
@@ -111,7 +161,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
                 if (!context.rtl) {
                     if (boundingContainer.x < bounding.x && me.movementX > 0)
                         return false
-                    if (boundingLast.x < boundingContainer.width && me.movementX < 0)
+                    if (boundingLast.x < (boundingContainer.x+boundingContainer.width) && me.movementX < 0)
                         return false
                 }
                 if (context.rtl) {
@@ -123,6 +173,8 @@ export default function XSlider({ children, noArrow = false }: { children: React
                     if (boundingLast.x > boundingContainer.x && me.movementX > 0)
                         return false
                 }
+                setDragX(a.x)
+
             }}
         >
             <div ref={dragRef} style={{

@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import { resolve } from 'node:path'
-import * as packageJson from './package.json'
+import react from '@vitejs/plugin-react-swc';
+import { readFileSync } from 'fs';
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
 import dts from "vite-plugin-dts";
-import terser from '@rollup/plugin-terser';
+import * as packageJson from './package.json';
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +15,29 @@ export default defineConfig({
       // include: ['src/Components'],
       // exclude: ['src/Components/index.ts']
     }),
+    {
+      name: 'load-file',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          if (req.url === '/api/readme') {
+            const filePath = resolve(__dirname, 'README.md');
+            const fileContent = readFileSync(filePath, 'utf-8');
+            res.setHeader('Content-Type', 'text/plain');
+            res.end(fileContent);
+            return;
+          }
+          next();
+        });
+      }
+    },
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'README.md',
+          dest: ''
+        }
+      ]
+    })
   ],
   css: {
     preprocessorOptions: {
