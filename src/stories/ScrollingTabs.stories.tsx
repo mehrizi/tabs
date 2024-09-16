@@ -37,7 +37,7 @@ export const Primary: Story = {
       // Check if we're in production (built Storybook) or development
       if (process.env.NODE_ENV === 'production') {
         // In build mode, use the bundled file path (static assets)
-        fileUrl = '/README.md'; // Served from static assets
+        fileUrl = './README.md'; // Served from static assets
       } else {
         // In development mode, use the Vite plugin's API
         fileUrl = '/api/readme';
@@ -135,5 +135,3 @@ export const RTL: Story = {
     ),
   ],
 };
-
-const arr = [8, 9, 10, 11]

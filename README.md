@@ -1,4 +1,8 @@
 ## Overview
+[Interactive Demo & Docs](https://mehrizi.github.io/scrolling-tabs/)
+
+[Github Repo](https://github.com/mehrizi/scrolling-tabs)
+
 This is a component for creating scrolling tabs. Objectives are:
 
 - Automatically scroll to a section by clicking on its respective tab button.
