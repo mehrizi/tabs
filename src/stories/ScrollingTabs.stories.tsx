@@ -32,18 +32,8 @@ export const Primary: Story = {
   render: (args) => {
     const [readme, setReadme] = useState<ParsedSection[]>([])
     async function fetchFileContent() {
-      let fileUrl = '';
 
-      // Check if we're in production (built Storybook) or development
-      if (process.env.NODE_ENV === 'production') {
-        // In build mode, use the bundled file path (static assets)
-        fileUrl = './README.md'; // Served from static assets
-      } else {
-        // In development mode, use the Vite plugin's API
-        fileUrl = '/api/readme';
-      }
-
-      const response = await fetch(fileUrl);
+      const response = await fetch('./README.md');
       const content = await response.text();
       // console.log(content); // Process the parsed file content
       setReadme(parseReadme(content))

@@ -19,7 +19,7 @@ export default defineConfig({
       name: 'load-file',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url === '/api/readme') {
+          if (req.url === '/README.md') {
             const filePath = resolve(__dirname, 'README.md');
             const fileContent = readFileSync(filePath, 'utf-8');
             res.setHeader('Content-Type', 'text/plain');

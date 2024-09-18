@@ -98,4 +98,7 @@ The component is responsive and will automatically scroll horizontally to the se
 Two arrows are displayed in the rightmost and leftmost spaces of the horizontal tabs bar. These can be removed by setting the boolean hideArrows prop to true.
 
 ## Troubleshooting
-If any parent element has overflow: hidden, the CSS sticky position will not work. Instead, use overflow: clip.
+If any parent element has `overflow: hidden`, the CSS sticky position will not work. Instead, use `overflow: clip`.
+
+If you have any issue, please feel free to submit an issue at 
+[https://github.com/mehrizi/scrolling-tabs/issues](https://github.com/mehrizi/scrolling-tabs/issues)
