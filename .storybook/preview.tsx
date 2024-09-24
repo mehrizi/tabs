@@ -8,7 +8,9 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
+    
   },
+
   decorators:[
     (Story)=><div style={{fontFamily:'Inter'}}><Story/></div>
   ]

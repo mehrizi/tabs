@@ -12,6 +12,7 @@ interface ParsedSection {
 
 const meta: Meta<typeof ScrollingTabs> = {
   component: ScrollingTabs,
+  title:"Scrolling Tabs"
 };
 export default meta;
 type Story = StoryObj<typeof ScrollingTabs>;
@@ -29,6 +30,7 @@ export const Primary: Story = {
       },
     }
   },
+  
   render: (args) => {
     const [readme, setReadme] = useState<ParsedSection[]>([])
     async function fetchFileContent() {

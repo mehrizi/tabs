@@ -1,7 +1,7 @@
 ## Overview
-[Interactive Demo & Docs](https://mehrizi.github.io/scrolling-tabs/)
+[Interactive Demo & Docs](https://tabs.js.org)
 
-[Github Repo](https://github.com/mehrizi/scrolling-tabs)
+[Github Repo](https://github.com/mehrizi/tabs)
 
 This is a component for creating scrolling tabs. Objectives are:
 
@@ -101,4 +101,4 @@ Two arrows are displayed in the rightmost and leftmost spaces of the horizontal 
 If any parent element has `overflow: hidden`, the CSS sticky position will not work. Instead, use `overflow: clip`.
 
 If you have any issue, please feel free to submit an issue at 
-[https://github.com/mehrizi/scrolling-tabs/issues](https://github.com/mehrizi/scrolling-tabs/issues)
+[https://github.com/mehrizi/tabs/issues](https://github.com/mehrizi/tabs/issues)

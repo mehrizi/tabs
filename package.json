@@ -1,8 +1,8 @@
 {
   "name": "scrolling-tabs",
-  "homepage": "https://mehrizi.github.io/scrolling-tabs",
+  "homepage": "https://mehrizi.github.io/tabs",
   "private": false,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "keywords": [
     "react",
@@ -15,10 +15,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mehrizi/scrolling-tabs"
+    "url": "git+https://github.com/mehrizi/tabs"
   },
   "bugs": {
-    "url": "https://github.com/mehrizi/scrolling-tabs/issues"
+    "url": "https://github.com/mehrizi/tabs/issues"
   },
   "files": [
     "dist"
