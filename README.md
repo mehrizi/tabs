@@ -1,7 +1,7 @@
 ## Overview
-[Interactive Demo & Docs](https://mehrizi.github.io/scrolling-tabs/)
+[Interactive Demo & Docs](https://mehrizi.github.io/tabs)
 
-[Github Repo](https://github.com/mehrizi/scrolling-tabs)
+[Github Repo](https://github.com/mehrizi/tabs)
 
 This is a component for creating scrolling tabs. Objectives are:
 
