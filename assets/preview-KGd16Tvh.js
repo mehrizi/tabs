@@ -1,0 +1,1 @@
+import{j as r}from"./jsx-runtime-Cw0GR0a5.js";import"./index-CTjT7uj6.js";const s={parameters:{controls:{matchers:{color:/(background|color)$/i,date:/Date$/i}}},decorators:[o=>r.jsx("div",{style:{fontFamily:"Inter"},children:r.jsx(o,{})})]};export{s as default};
