@@ -84,7 +84,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
             setTimeout(() => {
                 arrowCheck()
             }, 2)
-    
+
             return;
         }
         if (activeX < containerX) {
@@ -92,12 +92,22 @@ export default function XSlider({ children, noArrow = false }: { children: React
             setTimeout(() => {
                 arrowCheck()
             }, 2)
-    
+
             return;
         }
 
     }, [context.activeTab])
 
+    const slowDrag = (current: number, original: number,right:boolean=true) => {
+        const delta = (right?-1:1)*Math.floor(current /2)
+
+        if (delta == 0)
+            return;
+        setTimeout(() => {
+            setDragX(x => x + delta)
+            slowDrag(Math.abs(delta), original,right)
+        },20)
+    }
 
     useEffect(() => {
         setTimeout(() => {
@@ -109,6 +119,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
         direction: 'ltr',
         verticalAlign: 'middle', position: "absolute",
         maxHeight: '100%',
+        cursor: "pointer",
         left: 0,
         top: 0,
         bottom: 0,
@@ -161,7 +172,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
                 if (!context.rtl) {
                     if (boundingContainer.x < bounding.x && me.movementX > 0)
                         return false
-                    if (boundingLast.x < (boundingContainer.x+boundingContainer.width) && me.movementX < 0)
+                    if (boundingLast.x < (boundingContainer.x + boundingContainer.width) && me.movementX < 0)
                         return false
                 }
                 if (context.rtl) {
@@ -188,9 +199,16 @@ export default function XSlider({ children, noArrow = false }: { children: React
 
             </div>
         </Draggable>
-        {(!noArrow && overFlowRight) && <div style={rightArrowStyle}
+        {(!noArrow && overFlowRight) && <div style={rightArrowStyle} onClick={() => {
+            slowDrag(100,100);
+            setTimeout(() => arrowCheck(),100)
+        }}
             className="overflow-right">&raquo;</div>}
-        {(!noArrow && overFlowLeft) && <div style={leftArrowStyles} className="overflow-left">&laquo;</div>}
+        {(!noArrow && overFlowLeft) && <div style={leftArrowStyles} onClick={() => {
+                        slowDrag(100,100,false);
+                        setTimeout(() => arrowCheck(),100)
+            
+        }} className="overflow-left">&laquo;</div>}
 
 
     </div>

@@ -91,7 +91,7 @@ export const Primary: Story = {
 
         </div>
 
-        <div style={{ width: 700, margin: '0 auto', border: '1px solid #ccc', borderRadius: 10, padding: 10, lineHeight: 1.5 }}>
+        <div style={{maxWidth: '96%', width: 700, margin: '0 auto', border: '1px solid #ccc', borderRadius: 10, padding: 10, lineHeight: 1.5 }}>
           <ScrollingTabs {...args} >
             <Tabs>
               {readme.map((section, index) => <Tab key={index}>{section.title}</Tab>)}
@@ -106,7 +106,7 @@ export const Primary: Story = {
           </ScrollingTabs>
 
         </div>
-        <div style={{ padding: '200px 0', textAlign: 'center' }}>
+        <div style={{ padding: '300px 0', textAlign: 'center' }}>
           This area is intentionally put so you can see the sticky behavior of Tabs.<br />
           At the End we put some space as well to illustrate relative stickyness.<br />
 
