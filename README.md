@@ -1,5 +1,5 @@
 ## Overview
-[Interactive Demo & Docs](https://mehrizi.github.io/tabs)
+[Interactive Demo & Docs](https://tabs.js.org)
 
 [Github Repo](https://github.com/mehrizi/tabs)
 
