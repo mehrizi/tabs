@@ -30,6 +30,8 @@ export const Tabs = (props: TabsProps) => {
   // We make sure to capture all tabs in any decendant hierarchy
   const recursiveMap = (children: ReactNode, countObj = { count: -1 }): ReactNode => {
     return React.Children.map(children, (child) => {
+      if (!child)
+        return child
       if (React.isValidElement<TabProps>(child) && child.type === Tab) {
         countObj.count++;
         return React.cloneElement(child, {
@@ -39,7 +41,7 @@ export const Tabs = (props: TabsProps) => {
       }
 
       //@ts-ignore
-      if (child.props.children) {
+      if (child.props && child.props.children) {
         //@ts-ignore
         return React.cloneElement(child, {
           //@ts-ignore
