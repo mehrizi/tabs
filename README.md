@@ -62,17 +62,18 @@ The component checks for the direction of the component, and if it is inside an 
 You can set `dir='rtl'` on the document body or any parent of the `<ScrollingTabs>` component.
 
 ## Customization
+### ClassName and Style
 Aside from the tabColor and tabStyle props on the `<ScrollingTabs>` component, you can customize it by passing className and style props to `<Tabs>`, `<Tab>`, or `<TabContext>`.
 
 The `<Tab>` component will have an active class on the selected tab. It also has two extra props: activeStyle and activeClassName, which are set only for the active tab.
 
 Based on tabStyle and tabColor props, styles are composed in the following order:
 
-### For any Tab:
+#### For any Tab:
 - Default styles based on tabStyle.
 - Styles provided through style prop on the Tab component.
 
-### For the active Tab:
+#### For the active Tab:
 - Default styles based on tabStyle.
 - Default active styles based on tabStyle.
 - Styles provided through style prop on the Tab component.
@@ -91,6 +92,11 @@ Even with tabStyle set to none, the following styles are applied to avoid bad ta
   cursor: 'pointer'
 }
 ```
+
+#### .sticked
+The `<Tab>` component will have `.sticked` when it is sticked to the top of the page. You can use this class to style the tabs bar 
+differently from when it is not sticky yet.
+
 
 ## Responsivity
 The component is responsive and will automatically scroll horizontally to the selected tab on smaller screens. If the `<Tabs>` component is wider than the screen, it will scroll horizontally to show all tabs.
