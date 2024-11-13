@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect, useRef } from "react";
+import React, { ReactNode, useContext, useEffect, useRef, useState } from "react";
 import { ScrollingTabsContext } from "./ScrollingTabs";
 import { Tab, TabProps } from "./Tab";
 import XSlider from "./XSlider";
@@ -12,6 +12,7 @@ export interface TabsProps {
 
 export const Tabs = (props: TabsProps) => {
   const context = useContext(ScrollingTabsContext);
+  const [sticky, setSticky] = useState<boolean>(false)
   const finalStyle: React.CSSProperties = {
     background: 'white',
     padding: 10,
@@ -53,10 +54,26 @@ export const Tabs = (props: TabsProps) => {
 
   }
 
- 
+  useEffect(() => {
+
+    window.addEventListener("scroll", () => {
+      // check that no scrolling by clicking Tab is in progress
+      const clientRect = ref.current?.getBoundingClientRect()
+      if (!clientRect)
+        return
+      if (clientRect.top <= 0)
+        setSticky(true)
+      else
+        setSticky(false)
+    });
+
+  }, [])
+
+
+
   const finalChildren = recursiveMap(props.children)
   return (
-    <div className={props.className} style={finalStyle} ref={ref}>
+    <div className={props.className?props.className:''+ (sticky?" sticked":"")} style={finalStyle} ref={ref}>
       <XSlider noArrow={props.noArrow}>
         {finalChildren}
       </XSlider>

@@ -2,7 +2,7 @@
   "name": "scrolling-tabs",
   "homepage": "https://tabs.js.org/",
   "private": false,
-  "version": "0.8.4",
+  "version": "0.8.6",
   "type": "module",
   "keywords": [
     "react",
