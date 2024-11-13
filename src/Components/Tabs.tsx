@@ -73,7 +73,7 @@ export const Tabs = (props: TabsProps) => {
 
   const finalChildren = recursiveMap(props.children)
   return (
-    <div className={props.className?props.className:''+ (sticky?" sticked":"")} style={finalStyle} ref={ref}>
+    <div className={(props.className?props.className:'')+ (sticky?" sticked":"")} style={finalStyle} ref={ref}>
       <XSlider noArrow={props.noArrow}>
         {finalChildren}
       </XSlider>
