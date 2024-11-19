@@ -143,6 +143,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
         whiteSpace: "nowrap"
     }} ref={containerRef}>
         <Draggable
+        cancel={".need-interaction"}
             axis='x'
             position={{ y: 0, x: dragX }}
             onDrag={(e, a) => {

@@ -70,7 +70,7 @@ export function Tab({ style = {},ind, activeStyle = {},  children ,className='',
     ...activeStyle
   }
   return (
-    <div className={(context.activeTab==ind?`active ${activeClassName}`:'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
+    <div className={'need-interaction '+ (context.activeTab==ind?`active ${activeClassName}`:'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
       {children}
     </div>
   );
