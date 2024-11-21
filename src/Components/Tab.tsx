@@ -1,4 +1,4 @@
-import { ReactNode, useContext } from "react";
+import { ReactNode, useContext, useState,TouchEvent } from "react";
 import { ScrollingTabsContext } from "./ScrollingTabs";
 
 export interface TabProps {
@@ -57,7 +57,26 @@ export function Tab({ style = {},ind, activeStyle = {},  children ,className='',
       }
     },
   }
+  const [startX, setStartX] = useState<number|null>(null);
+  const [startY, setStartY] = useState<number|null>(null);
 
+  const handleTouchStart = (event:TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    setStartX(touch.clientX);
+    setStartY(touch.clientY);
+  };
+
+  const handleTouchEnd = (event:TouchEvent<HTMLDivElement>) => {
+    if (!startX||!startY)
+      return;
+    const touch = event.changedTouches[0];
+    const endX = touch.clientX;
+    const endY = touch.clientY;
+    const distance = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+    if (distance < 2) {
+      context.setActiveTabByClick(ind!)
+    }
+  };
 
   const finalStyles = {
     ...styles._default,
@@ -70,7 +89,12 @@ export function Tab({ style = {},ind, activeStyle = {},  children ,className='',
     ...activeStyle
   }
   return (
-    <div className={'need-interaction '+ (context.activeTab==ind?`active ${activeClassName}`:'')+className} style={context.activeTab==ind ? finalActiveStyles : finalStyles} onClick={()=>context.setActiveTabByClick(ind!)}>
+    <div className={''+ (context.activeTab==ind?`active ${activeClassName}`:'')+className} 
+    style={context.activeTab==ind ? finalActiveStyles : finalStyles} 
+    onClick={()=>context.setActiveTabByClick(ind!)}
+    onTouchStart={handleTouchStart}
+    onTouchEnd={handleTouchEnd}
+    >
       {children}
     </div>
   );

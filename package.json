@@ -2,7 +2,7 @@
   "name": "scrolling-tabs",
   "homepage": "https://tabs.js.org/",
   "private": false,
-  "version": "0.8.8",
+  "version": "0.9.0",
   "type": "module",
   "keywords": [
     "react",
@@ -40,7 +40,7 @@
   "module": "./dist/scrolling-tabs.es.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",

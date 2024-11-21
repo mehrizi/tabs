@@ -1,5 +1,5 @@
-import { MouseEvent, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import Draggable from "react-draggable"
+import { ReactNode, useContext, useEffect, useRef, useState } from "react";
+import Draggable from "react-draggable";
 import { ScrollingTabsContext } from "./ScrollingTabs";
 
 export default function XSlider({ children, noArrow = false }: { children: ReactNode, noArrow?: boolean }) {
@@ -143,10 +143,9 @@ export default function XSlider({ children, noArrow = false }: { children: React
         whiteSpace: "nowrap"
     }} ref={containerRef}>
         <Draggable
-        cancel={".need-interaction"}
             axis='x'
             position={{ y: 0, x: dragX }}
-            onDrag={(e, a) => {
+            onDrag={(_e, a) => {
 
                 setTimeout(() => {
                     if (!noArrow) {
@@ -168,21 +167,19 @@ export default function XSlider({ children, noArrow = false }: { children: React
                     return false;
 
 
-                const me = e as MouseEvent;
-
                 if (!context.rtl) {
-                    if (boundingContainer.x < bounding.x && me.movementX > 0)
+                    if (boundingContainer.x < bounding.x && a.deltaX > 0)
                         return false
-                    if (boundingLast.x < (boundingContainer.x + boundingContainer.width) && me.movementX < 0)
+                    if (boundingLast.x < (boundingContainer.x + boundingContainer.width) && a.deltaX < 0)
                         return false
                 }
                 if (context.rtl) {
                     const endDeltaX = (bounding.x + bounding.width - (boundingContainer.x + boundingContainer.width))
-                    if (endDeltaX < 0 && me.movementX < 0) {
+                    if (endDeltaX < 0 && a.deltaX < 0) {
                         return false
                     }
 
-                    if (boundingLast.x > boundingContainer.x && me.movementX > 0)
+                    if (boundingLast.x > boundingContainer.x && a.deltaX > 0)
                         return false
                 }
                 setDragX(a.x)
