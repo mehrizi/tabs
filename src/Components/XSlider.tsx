@@ -98,15 +98,15 @@ export default function XSlider({ children, noArrow = false }: { children: React
 
     }, [context.activeTab])
 
-    const slowDrag = (current: number, original: number,right:boolean=true) => {
-        const delta = (right?-1:1)*Math.floor(current /2)
+    const slowDrag = (current: number, original: number, right: boolean = true) => {
+        const delta = (right ? -1 : 1) * Math.floor(current / 2)
 
         if (delta == 0)
             return;
         setTimeout(() => {
             setDragX(x => x + delta)
-            slowDrag(Math.abs(delta), original,right)
-        },20)
+            slowDrag(Math.abs(delta), original, right)
+        }, 20)
     }
 
     useEffect(() => {
@@ -143,6 +143,7 @@ export default function XSlider({ children, noArrow = false }: { children: React
         whiteSpace: "nowrap"
     }} ref={containerRef}>
         <Draggable
+            nodeRef={dragRef}
             axis='x'
             position={{ y: 0, x: dragX }}
             onDrag={(_e, a) => {
@@ -198,14 +199,14 @@ export default function XSlider({ children, noArrow = false }: { children: React
             </div>
         </Draggable>
         {(!noArrow && overFlowRight) && <div style={rightArrowStyle} onClick={() => {
-            slowDrag(100,100);
-            setTimeout(() => arrowCheck(),100)
+            slowDrag(100, 100);
+            setTimeout(() => arrowCheck(), 100)
         }}
             className="overflow-right">&raquo;</div>}
         {(!noArrow && overFlowLeft) && <div style={leftArrowStyles} onClick={() => {
-                        slowDrag(100,100,false);
-                        setTimeout(() => arrowCheck(),100)
-            
+            slowDrag(100, 100, false);
+            setTimeout(() => arrowCheck(), 100)
+
         }} className="overflow-left">&laquo;</div>}
 
 

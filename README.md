@@ -110,6 +110,9 @@ If you have any issue, please feel free to submit an issue at
 [https://github.com/mehrizi/tabs/issues](https://github.com/mehrizi/tabs/issues)
 
 ## Changelog
+Version 0.9.1 (2024/11/25)
+- Fixed react 19-rc compatibility issue
+
 Version 0.9.0 (2024/11/21)
 - Fixed touch devices drag compatibility
 
